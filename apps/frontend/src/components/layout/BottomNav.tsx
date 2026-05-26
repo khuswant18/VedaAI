@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { useSidebarContext } from './AppShell';
 import { cn } from '@/lib/utils';
 import {
-  LayoutGrid,
-  Calendar,
-  BookOpen,
-  Sparkles,
-} from 'lucide-react';
+  HomeIcon,
+  AssignmentsIcon,
+  LibraryIcon,
+  AIToolkitIcon,
+} from '@/components/icons/FigmaIcons';
 const navItems = [
-  { id: 'Home', href: '/', label: 'Home', icon: LayoutGrid },
-  { id: 'Assignments', href: '/', label: 'Assignments', icon: Calendar, badge: true },
-  { id: 'My Library', href: '/', label: 'Library', icon: BookOpen },
-  { id: 'AI Toolkit', href: '/', label: 'AI Toolkit', icon: Sparkles },
+  { id: 'Home', href: '/', label: 'Home', icon: HomeIcon },
+  { id: 'Assignments', href: '/', label: 'Assignments', icon: AssignmentsIcon, badge: true },
+  { id: 'My Library', href: '/', label: 'Library', icon: LibraryIcon },
+  { id: 'AI Toolkit', href: '/', label: 'AI Toolkit', icon: AIToolkitIcon },
 ];
 export function BottomNav() {
   const { activeNav, setActiveNav, assignmentCount } = useSidebarContext();

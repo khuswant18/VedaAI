@@ -2,8 +2,6 @@
 
 AI-powered question paper generator for teachers. Create assignments and instantly generate customized, structured question papers using AI.
 
-![Screenshot Placeholder](docs/screenshot.png)
-
 ---
 
 ## Architecture

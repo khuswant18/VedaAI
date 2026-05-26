@@ -4,23 +4,26 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useSidebarContext } from './AppShell';
 import {
-  LayoutGrid,
-  FileText,
+  HomeIcon,
+  GroupsIcon,
+  AssignmentsIcon,
+  AIToolkitIcon,
+  LibraryIcon,
+  SettingsIcon,
+} from '@/components/icons/FigmaIcons';
+import {
   Sparkles,
-  BookOpen,
-  Settings,
-  Users,
   X,
   LogOut,
   User,
   HelpCircle,
 } from 'lucide-react';
 const navItems = [
-  { id: 'Home', href: '/', label: 'Home', icon: LayoutGrid },
-  { id: 'My Groups', href: '/', label: 'My Groups', icon: Users },
-  { id: 'Assignments', href: '/', label: 'Assignments', icon: FileText, badge: true },
-  { id: 'AI Toolkit', href: '/', label: "AI Teacher's Toolkit", icon: Sparkles },
-  { id: 'My Library', href: '/', label: 'My Library', icon: BookOpen },
+  { id: 'Home', href: '/', label: 'Home', icon: HomeIcon },
+  { id: 'My Groups', href: '/', label: 'My Groups', icon: GroupsIcon },
+  { id: 'Assignments', href: '/', label: 'Assignments', icon: AssignmentsIcon, badge: true },
+  { id: 'AI Toolkit', href: '/', label: "AI Teacher's Toolkit", icon: AIToolkitIcon },
+  { id: 'My Library', href: '/', label: 'My Library', icon: LibraryIcon },
 ];
 interface SidebarProps {
   isOpen?: boolean;
@@ -137,7 +140,7 @@ function SidebarContent({
               : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
           )}
         >
-          <Settings className="h-5 w-5" />
+          <SettingsIcon className="h-5 w-5" />
           Settings
         </button>
         {settingsOpen && (
