@@ -7,7 +7,7 @@ import type {
   JobStatus,
 } from '@/types';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000').replace(/\/$/, '');
 
 const api = axios.create({
   baseURL: `${BACKEND_URL}/api`,

@@ -6,9 +6,21 @@ import { logger } from '../utils/logger';
 let io: Server | null = null;
 
 export function setupSocket(httpServer: HTTPServer): Server {
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'https://veda-ai-frontend-one.vercel.app',
+    'https://vedaai-frontend.vercel.app',
+  ];
+  if (Array.isArray(env.corsOrigin)) {
+    allowedOrigins.push(...env.corsOrigin);
+  } else if (typeof env.corsOrigin === 'string') {
+    allowedOrigins.push(env.corsOrigin);
+  }
+  const uniqueOrigins = [...new Set(allowedOrigins)];
+
   io = new Server(httpServer, {
     cors: {
-      origin: env.corsOrigin,
+      origin: uniqueOrigins,
       methods: ['GET', 'POST'],
     },
     transports: ['websocket', 'polling'],
