@@ -132,7 +132,7 @@ function ProfileDropdown() {
       >
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 text-white font-semibold text-xs overflow-hidden">
           <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=JohnDoe"
+            src="/assets/profile_avatar.png"
             alt="Profile"
             className="w-full h-full object-cover"
             onError={(e) => {
@@ -211,8 +211,8 @@ export function Header({
             <div className="flex items-center gap-2 lg:hidden">
               <div className="relative flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden">
                 <img 
-                  src="/main_logo.jpg" 
-                  alt="VedaAI Logo Background" 
+                  src="/assets/logo.png" 
+                  alt="VedaAI Logo" 
                   className="absolute inset-0 w-full h-full object-cover" 
                 />
                 <span className="relative text-white font-bold text-sm z-10">V</span>

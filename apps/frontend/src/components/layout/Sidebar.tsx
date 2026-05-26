@@ -61,8 +61,8 @@ function SidebarContent({
         >
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl overflow-hidden shadow-sm">
             <img 
-              src="/main_logo.jpg" 
-              alt="VedaAI Logo Background" 
+              src="/assets/logo.png" 
+              alt="VedaAI Logo" 
               className="absolute inset-0 w-full h-full object-cover" 
             />
             <span className="relative text-white font-bold text-lg z-10">V</span>

@@ -278,15 +278,17 @@ export default function DashboardPage() {
           </div>
         ) : filteredAssignments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 sm:py-20 max-w-md mx-auto text-center px-4">
-            <div className="relative w-48 h-48 mb-6">
-              <div className="absolute inset-0 bg-white shadow-sm rounded-full flex items-center justify-center border border-gray-100">
-                <FileText className="h-16 w-16 text-gray-300" />
-              </div>
-              <div className="absolute bottom-4 right-4 bg-white p-2 rounded-full shadow-md">
-                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                  <XCircle className="h-6 w-6 text-white" />
-                </div>
-              </div>
+            <div className="mb-6">
+              <img
+                src="/assets/empty_illustration.png"
+                alt="No assignments"
+                className="w-64 h-auto hidden sm:block"
+              />
+              <img
+                src="/assets/empty_illustration_mobile.png"
+                alt="No assignments"
+                className="w-48 h-auto sm:hidden"
+              />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">
               No assignments yet
