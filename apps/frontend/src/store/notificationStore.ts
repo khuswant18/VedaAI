@@ -14,34 +14,26 @@ interface NotificationStore {
   markAllRead: () => void;
   markRead: (id: string) => void;
   unreadCount: () => number;
+  addNotification: (title: string, message: string) => void;
 }
 
 export const useNotificationStore = create<NotificationStore>()(
   persist(
     (set, get) => ({
-      notifications: [
-        {
-          id: '1',
-          title: 'Paper Generated',
-          message: 'Quiz on Electricity is ready to view.',
-          time: '2 min ago',
-          read: false,
-        },
-        {
-          id: '2',
-          title: 'Assignment Created',
-          message: 'New assignment has been created successfully.',
-          time: '1 hour ago',
-          read: false,
-        },
-        {
-          id: '3',
-          title: 'Welcome to VedaAI',
-          message: 'Start creating AI-powered question papers.',
-          time: '1 day ago',
-          read: true,
-        },
-      ],
+      notifications: [],
+      addNotification: (title: string, message: string) =>
+        set((state) => ({
+          notifications: [
+            {
+              id: Math.random().toString(36).substring(2, 9),
+              title,
+              message,
+              time: 'Just now',
+              read: false,
+            },
+            ...state.notifications,
+          ],
+        })),
       markAllRead: () =>
         set((state) => ({
           notifications: state.notifications.map((n) => ({ ...n, read: true })),

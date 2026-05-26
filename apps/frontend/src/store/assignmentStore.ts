@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { createAssignment } from '@/services/api';
 import type { AssignmentInput } from '@vedaai/shared';
 import { useToastStore } from './toastStore';
+import { useNotificationStore } from './notificationStore';
 
 interface AssignmentStore {
   formData: Partial<AssignmentInput>;
@@ -54,6 +55,11 @@ export const useAssignmentStore = create<AssignmentStore>((set) => ({
         currentJobId: result.jobId,
         isSubmitting: false,
       });
+
+      useNotificationStore.getState().addNotification(
+        'Assignment Created',
+        `"${data.title}" has been submitted. Paper generation started.`
+      );
     } catch (error) {
       set({ isSubmitting: false });
       const message = error instanceof Error ? error.message : 'Failed to create assignment';

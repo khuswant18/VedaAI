@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useNotificationStore } from './notificationStore';
 
 interface Toast {
   id: string;
@@ -20,6 +21,13 @@ export const useToastStore = create<ToastStore>((set) => ({
     set((state) => ({
       toasts: [...state.toasts, { id, message, type }],
     }));
+
+    if (type === 'success' || type === 'info') {
+      useNotificationStore.getState().addNotification(
+        type === 'success' ? 'Success' : 'Notice',
+        message
+      );
+    }
 
     // Auto-remove after 5 seconds
     setTimeout(() => {

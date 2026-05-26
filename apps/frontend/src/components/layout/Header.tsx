@@ -64,33 +64,40 @@ function NotificationDropdown() {
             )}
           </div>
           <div className="max-h-80 overflow-y-auto">
-            {notifications.map((notif) => (
-              <button
-                key={notif.id}
-                onClick={() => {
-                  markRead(notif.id);
-                  setIsOpen(false);
-                }}
-                className={`flex gap-3 w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0 ${
-                  !notif.read ? 'bg-orange-50/50' : ''
-                }`}
-              >
-                <div
-                  className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${
-                    !notif.read ? 'bg-orange-500' : 'bg-transparent'
+            {notifications.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-10 px-4">
+                <Bell className="h-8 w-8 text-gray-300 mb-2" />
+                <p className="text-sm text-gray-400">No notifications yet</p>
+              </div>
+            ) : (
+              notifications.map((notif) => (
+                <button
+                  key={notif.id}
+                  onClick={() => {
+                    markRead(notif.id);
+                    setIsOpen(false);
+                  }}
+                  className={`flex gap-3 w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0 ${
+                    !notif.read ? 'bg-orange-50/50' : ''
                   }`}
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {notif.title}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-0.5 truncate">
-                    {notif.message}
-                  </p>
-                  <p className="text-[10px] text-gray-400 mt-1">{notif.time}</p>
-                </div>
-              </button>
-            ))}
+                >
+                  <div
+                    className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${
+                      !notif.read ? 'bg-orange-500' : 'bg-transparent'
+                    }`}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {notif.title}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5 truncate">
+                      {notif.message}
+                    </p>
+                    <p className="text-[10px] text-gray-400 mt-1">{notif.time}</p>
+                  </div>
+                </button>
+              ))
+            )}
           </div>
           <div className="px-4 py-2.5 border-t border-gray-100 bg-gray-50">
             <button

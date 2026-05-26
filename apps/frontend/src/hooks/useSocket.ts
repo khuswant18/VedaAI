@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback } from 'react';
 import { useSocketStore } from '@/store/socketStore';
+import { useNotificationStore } from '@/store/notificationStore';
 import type { JobStatus } from '@vedaai/shared';
 
 interface SocketJobEvents {
@@ -45,6 +46,10 @@ export function useSocket(jobId: string | null, events?: SocketJobEvents) {
         step: 'done',
         paperId: data.paperId,
       });
+      useNotificationStore.getState().addNotification(
+        'Paper Generated',
+        'Your question paper is ready to view and download.'
+      );
       events?.onCompleted?.(data);
     });
 
