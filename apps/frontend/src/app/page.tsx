@@ -310,20 +310,28 @@ export default function DashboardPage() {
             <Spinner size="lg" />
           </div>
         ) : filteredAssignments.length === 0 ? (
-          <div className="text-center py-16 sm:py-20">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mx-auto mb-4">
-              <FileText className="h-8 w-8 text-gray-400" />
+          <div className="flex flex-col items-center justify-center py-16 sm:py-20 max-w-md mx-auto text-center px-4">
+            <div className="relative w-48 h-48 mb-6">
+              <div className="absolute inset-0 bg-white shadow-sm rounded-full flex items-center justify-center border border-gray-100">
+                <FileText className="h-16 w-16 text-gray-300" />
+              </div>
+              <div className="absolute bottom-4 right-4 bg-white p-2 rounded-full shadow-md">
+                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
+                  <XCircle className="h-6 w-6 text-white" />
+                </div>
+              </div>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
               No assignments yet
             </h3>
-            <p className="text-sm text-gray-500 mb-6">
-              Create your first AI-powered question paper.
+            <p className="text-sm text-gray-500 mb-8 leading-relaxed">
+              Create your first assignment to start collecting and grading student submissions. You can set up rubrics, define marking criteria, and let AI assist with grading.
             </p>
-            <Link href="/assignments/new">
-              <Button icon={<Sparkles className="h-4 w-4" />}>
-                Create Assignment
-              </Button>
+            <Link href="/assignments/new" className="w-full sm:w-auto">
+              <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 bg-[#1C1C1C] text-white rounded-full font-medium text-sm hover:bg-black transition-colors shadow-sm">
+                <Plus className="h-5 w-5" />
+                Create Your First Assignment
+              </button>
             </Link>
           </div>
         ) : (
@@ -370,16 +378,11 @@ export default function DashboardPage() {
         )}
 
         {/* Floating Create Button */}
-        <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-8 z-20">
+        <div className="fixed bottom-24 lg:bottom-8 right-4 sm:right-8 z-30">
           <Link href="/assignments/new">
-            <Button
-              size="lg"
-              icon={<Plus className="h-5 w-5" />}
-              className="shadow-lg shadow-gray-300 hover:shadow-xl hover:shadow-gray-400"
-            >
-              <span className="hidden sm:inline">Create Assignment</span>
-              <span className="sm:hidden">Create</span>
-            </Button>
+            <button className="flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-lg text-orange-600 hover:bg-gray-50 transition-colors">
+              <Plus className="h-6 w-6" />
+            </button>
           </Link>
         </div>
       </div>

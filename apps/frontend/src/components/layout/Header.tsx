@@ -214,49 +214,53 @@ export function Header({
   };
 
   return (
-    <header className="flex items-center justify-between h-14 px-3 sm:px-4 md:px-6 bg-white border-b border-gray-200 sticky top-0 z-30">
-      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-        {/* Mobile hamburger — only when no back button */}
-        {!showBack && (
-          <button
-            onClick={open}
-            className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
-            aria-label="Open menu"
-          >
-            <Menu className="h-5 w-5 text-gray-600" />
-          </button>
-        )}
+    <div className="px-4 pt-4 sticky top-0 z-30">
+      <header className="flex items-center justify-between h-16 px-4 bg-white rounded-[24px] shadow-sm">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          {showBack && (
+            <Link
+              href={backHref}
+              className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 text-gray-600" />
+            </Link>
+          )}
 
-        {showBack && (
-          <Link
-            href={backHref}
-            className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 text-gray-600" />
-          </Link>
-        )}
-
-        {/* Mobile logo (shown when no back button) */}
-        {!showBack && (
-          <div className="flex items-center gap-2 lg:hidden">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-orange-400 to-red-500 text-white font-bold text-sm">
-              V
+          {/* Mobile logo (shown when no back button) */}
+          {!showBack && (
+            <div className="flex items-center gap-2 lg:hidden">
+              <img 
+                src="/main_logo.jpg" 
+                alt="VedaAI Logo" 
+                className="w-8 h-8 rounded-lg object-cover" 
+              />
+              <span className="text-lg font-bold text-gray-900">VedaAI</span>
             </div>
-            <span className="text-lg font-bold text-gray-900">VedaAI</span>
+          )}
+
+          {/* Breadcrumb with icon — matches Figma */}
+          <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
+            <LayoutGrid className="h-4 w-4" />
+            <span className="font-medium">{getBreadcrumb()}</span>
           </div>
-        )}
-
-        {/* Breadcrumb with icon — matches Figma */}
-        <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
-          <LayoutGrid className="h-4 w-4" />
-          <span className="font-medium">{getBreadcrumb()}</span>
         </div>
-      </div>
 
-      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-        <NotificationDropdown />
-        <ProfileDropdown />
-      </div>
-    </header>
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <NotificationDropdown />
+          <ProfileDropdown />
+          
+          {/* Mobile hamburger — moved to the right */}
+          {!showBack && (
+            <button
+              onClick={open}
+              className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 transition-colors lg:hidden ml-1"
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5 text-gray-600" />
+            </button>
+          )}
+        </div>
+      </header>
+    </div>
   );
 }

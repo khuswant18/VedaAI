@@ -67,9 +67,11 @@ function SidebarContent({
             onClose?.();
           }}
         >
-          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 text-white font-bold text-lg shadow-sm">
-            V
-          </div>
+          <img 
+            src="/main_logo.jpg" 
+            alt="VedaAI Logo" 
+            className="w-9 h-9 rounded-xl object-cover shadow-sm" 
+          />
           <span className="text-xl font-bold text-gray-900 tracking-tight">
             VedaAI
           </span>
