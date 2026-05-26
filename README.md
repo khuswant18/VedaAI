@@ -8,7 +8,7 @@ AI-powered question paper generator for teachers. Create assignments and instant
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                      Docker Compose                          │
+│                    System Architecture                       │
 │                                                              │
 │  ┌────────────┐   ┌────────────┐   ┌───────┐  ┌──────────┐  │
 │  │  Frontend   │──▶│  Backend   │──▶│ Redis │  │ MongoDB  │  │
@@ -54,36 +54,13 @@ Flow: Form → REST API → BullMQ Job → AI Generation → WebSocket → Paper
 ## Prerequisites
 
 - **Node.js** ≥ 18
-- **Docker** & **Docker Compose** (for one-command setup)
+- **MongoDB** (running on port 27017)
+- **Redis** (running on port 6379)
 - **Anthropic API Key** (for AI generation)
 
 ---
 
-## Quick Start with Docker
-
-```bash
-# 1. Clone the repository
-git clone <repo-url>
-cd vedaai
-
-# 2. Copy env files
-cp apps/backend/.env.example apps/backend/.env
-cp apps/frontend/.env.example apps/frontend/.env
-
-# 3. Add your Anthropic API key to apps/backend/.env
-# ANTHROPIC_API_KEY=your_key_here
-
-# 4. Start everything
-docker-compose up --build
-```
-
-- **Frontend:** http://localhost:3000
-- **Backend API:** http://localhost:5000/api
-- **WebSocket:** ws://localhost:5000
-
----
-
-## Local Setup (Without Docker)
+## Local Setup
 
 ### 1. Start infrastructure
 
@@ -205,7 +182,6 @@ vedaai/
 │           └── workers/   ← BullMQ workers
 ├── packages/
 │   └── shared/            ← Zod schemas + TypeScript types
-├── docker-compose.yml
 └── README.md
 ```
 
