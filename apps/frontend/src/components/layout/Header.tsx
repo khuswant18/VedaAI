@@ -44,7 +44,7 @@ function NotificationDropdown() {
       >
         <Bell className="h-5 w-5 text-gray-600" />
         {count > 0 && (
-          <span className="absolute top-1 right-1 flex items-center justify-center min-w-[16px] h-4 rounded-full bg-red-500 text-white text-[9px] font-bold px-1">
+          <span className="absolute top-1 right-1 flex items-center justify-center min-w-[16px] h-4 rounded-full bg-[#ff5623] text-white text-[9px] font-bold px-1">
             {count}
           </span>
         )}
@@ -56,7 +56,7 @@ function NotificationDropdown() {
             {count > 0 && (
               <button
                 onClick={markAllRead}
-                className="flex items-center gap-1 text-xs font-medium text-orange-600 hover:text-orange-700 transition-colors"
+                className="flex items-center gap-1 text-xs font-medium text-[#ff5623] hover:text-[#e04c20] transition-colors"
               >
                 <Check className="h-3 w-3" />
                 Mark all read
@@ -78,7 +78,7 @@ function NotificationDropdown() {
                     setIsOpen(false);
                   }}
                   className={`flex gap-3 w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0 ${
-                    !notif.read ? 'bg-orange-50/50' : ''
+                    !notif.read ? 'bg-[#ff5623]/10' : ''
                   }`}
                 >
                   <div
@@ -130,7 +130,7 @@ function ProfileDropdown() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 pl-2 border-l border-gray-200 hover:opacity-80 transition-opacity"
       >
-        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 text-white font-semibold text-xs overflow-hidden">
+        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#ff5623] text-white font-semibold text-xs overflow-hidden">
           <img
             src="/assets/profile_avatar.png"
             alt="Profile"

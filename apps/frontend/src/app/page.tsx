@@ -345,7 +345,7 @@ export default function DashboardPage() {
         )}
         <div className="fixed bottom-24 lg:bottom-8 right-4 sm:right-8 z-30">
           <Link href="/assignments/new">
-            <button className="flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-lg text-orange-600 hover:bg-gray-50 transition-colors">
+            <button className="flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-lg text-[#ff5623] hover:bg-gray-50 transition-colors">
               <Plus className="h-6 w-6" />
             </button>
           </Link>

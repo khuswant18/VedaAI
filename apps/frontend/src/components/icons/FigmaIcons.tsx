@@ -2,19 +2,19 @@ import React from 'react';
 
 export const HomeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props}   viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.4998 11.6667H11.6665V17.5H17.4998V11.6667Z" stroke="currentColor"  stroke- strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M8.33333 11.6667H2.5V17.5H8.33333V11.6667Z" stroke="currentColor"  stroke- strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M17.4998 2.5H11.6665V8.33333H17.4998V2.5Z" stroke="currentColor"  stroke- strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M8.33333 2.5H2.5V8.33333H8.33333V2.5Z" stroke="currentColor"  stroke- strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M17.4998 11.6667H11.6665V17.5H17.4998V11.6667Z" stroke="currentColor"  strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M8.33333 11.6667H2.5V17.5H8.33333V11.6667Z" stroke="currentColor"  strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M17.4998 2.5H11.6665V8.33333H17.4998V2.5Z" stroke="currentColor"  strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M8.33333 2.5H2.5V8.33333H8.33333V2.5Z" stroke="currentColor"  strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
 );
 
 export const AssignmentsIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props}   viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M7.5 14.1667H12.5" stroke="currentColor"  stroke- strokeLinecap="round"/>
-<path d="M7.5 10.8333H12.5" stroke="currentColor"  stroke- strokeLinecap="round"/>
-<path d="M7.5 7.5H8.33333" stroke="currentColor"  stroke- strokeLinecap="round"/>
+<path d="M7.5 14.1667H12.5" stroke="currentColor"  strokeLinecap="round"/>
+<path d="M7.5 10.8333H12.5" stroke="currentColor"  strokeLinecap="round"/>
+<path d="M7.5 7.5H8.33333" stroke="currentColor"  strokeLinecap="round"/>
 <path d="M4.1665 5C4.1665 3.61929 5.28579 2.5 6.6665 2.5H10.9761C11.4182 2.5 11.8421 2.67559 12.1547 2.98816L15.345 6.17851C15.6576 6.49107 15.8332 6.915 15.8332 7.35702V15C15.8332 16.3807 14.7139 17.5 13.3332 17.5H6.6665C5.28579 17.5 4.1665 16.3807 4.1665 15V5Z" stroke="currentColor"  stroke-/>
 <path d="M10.8335 2.5V4.16667C10.8335 6.00762 12.3259 7.5 14.1668 7.5H15.8335" stroke="currentColor"  stroke-/>
 </svg>

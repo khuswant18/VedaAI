@@ -12,11 +12,11 @@ import {
   SettingsIcon,
 } from '@/components/icons/FigmaIcons';
 import {
-  Sparkles,
   X,
   LogOut,
   User,
   HelpCircle,
+  Plus,
 } from 'lucide-react';
 const navItems = [
   { id: 'Home', href: '/', label: 'Home', icon: HomeIcon },
@@ -87,9 +87,9 @@ function SidebarContent({
         <Link
           href="/assignments/new"
           onClick={onClose}
-          className="flex items-center justify-center gap-2 w-full rounded-full bg-gray-900 hover:bg-gray-800 text-white font-medium px-4 py-3 transition-all duration-200 shadow-sm hover:shadow-md text-sm"
+          className="flex items-center justify-center gap-2 w-full rounded-full bg-[#171717] hover:bg-[#2a2a2a] text-white font-medium px-4 py-3 transition-all duration-200 shadow-sm hover:shadow-md text-sm"
         >
-          <Sparkles className="h-4 w-4 text-orange-400" />
+          <Plus className="h-4 w-4 text-[#ff5623]" />
           Create Assignment
         </Link>
       </div>
@@ -107,22 +107,22 @@ function SidebarContent({
               className={cn(
                 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative text-left',
                 isActive
-                  ? 'bg-gray-100 text-gray-900 font-semibold'
-                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'bg-[#efefef] text-[#171717] font-semibold'
+                  : 'text-[#5d5d5d] hover:bg-[#f6f6f6] hover:text-[#171717]'
               )}
             >
               {isActive && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-orange-500 rounded-r-full" />
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#ff5623] rounded-r-full" />
               )}
               <Icon
                 className={cn(
                   'h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-gray-900' : 'text-gray-400'
+                  isActive ? 'text-[#171717]' : 'text-[#5d5d5d]'
                 )}
               />
               <span className="flex-1">{item.label}</span>
               {item.badge && assignmentCount > 0 && (
-                <span className="flex items-center justify-center min-w-[22px] h-[22px] rounded-full bg-orange-500 text-white text-[10px] font-bold px-1.5">
+                <span className="flex items-center justify-center min-w-[22px] h-[22px] rounded-full bg-[#ff5623] text-white text-[10px] font-bold px-1.5">
                   {assignmentCount}
                 </span>
               )}
@@ -136,8 +136,8 @@ function SidebarContent({
           className={cn(
             'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
             settingsOpen
-              ? 'bg-gray-100 text-gray-900'
-              : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+              ? 'bg-[#efefef] text-[#171717]'
+              : 'text-[#5d5d5d] hover:bg-[#f6f6f6] hover:text-[#171717]'
           )}
         >
           <SettingsIcon className="h-5 w-5" />

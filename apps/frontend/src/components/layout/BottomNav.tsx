@@ -41,7 +41,7 @@ export function BottomNav() {
                   fill={isActive ? 'currentColor' : 'none'}
                 />
                 {item.badge && assignmentCount > 0 && (
-                  <span className="absolute -top-1 -right-2 flex items-center justify-center min-w-[16px] h-4 rounded-full bg-orange-500 text-white text-[10px] font-bold px-1 ring-2 ring-[#1C1C1C]">
+                  <span className="absolute -top-1 -right-2 flex items-center justify-center min-w-[16px] h-4 rounded-full bg-[#ff5623] text-white text-[10px] font-bold px-1 ring-2 ring-[#1C1C1C]">
                     {assignmentCount}
                   </span>
                 )}
