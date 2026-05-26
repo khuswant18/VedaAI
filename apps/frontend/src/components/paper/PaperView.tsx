@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import { SectionBlock } from './SectionBlock';
 import { StudentInfoBar } from './StudentInfoBar';
@@ -7,7 +6,6 @@ import { Button } from '@/components/ui/Button';
 import { RefreshCw, Download, Calendar, Hash, Award } from 'lucide-react';
 import type { GeneratedPaper } from '@vedaai/shared';
 import { formatDate } from '@/lib/utils';
-
 interface PaperViewProps {
   paper: GeneratedPaper;
   dueDate?: string;
@@ -15,7 +13,6 @@ interface PaperViewProps {
   onDownloadPDF?: () => void;
   isRegenerating?: boolean;
 }
-
 export function PaperView({
   paper,
   dueDate,
@@ -23,12 +20,9 @@ export function PaperView({
   onDownloadPDF,
   isRegenerating,
 }: PaperViewProps) {
-  // Track cumulative question numbers across sections
   let questionCounter = 0;
-
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Action Bar */}
       <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-4 sm:p-5 text-white">
         <p className="text-sm text-gray-300 mb-3">
           ✨ Here is your customized Question Paper for{' '}
@@ -61,11 +55,8 @@ export function PaperView({
           )}
         </div>
       </div>
-
-      {/* Paper Content */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-4 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10">
-          {/* Paper Header */}
           <div className="text-center mb-4 sm:mb-6">
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
               {paper.title}
@@ -74,8 +65,6 @@ export function PaperView({
               Subject: {paper.subject}
             </p>
           </div>
-
-          {/* Paper Meta — stacks on mobile */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-2 text-sm text-gray-600">
             <div className="flex flex-wrap items-center gap-3">
               {dueDate && (
@@ -94,21 +83,14 @@ export function PaperView({
               Maximum Marks: {paper.totalMarks}
             </span>
           </div>
-
-          {/* Instructions */}
           <p className="text-sm font-medium text-gray-700 mb-4">
             All questions are compulsory unless stated otherwise.
           </p>
-
-          {/* Student Info */}
           <StudentInfoBar />
-
-          {/* Sections */}
           <div className="divide-y divide-gray-200 mt-4 sm:mt-6">
             {paper.sections.map((section, idx) => {
               const startNum = questionCounter + 1;
               questionCounter += section.questions.length;
-
               return (
                 <SectionBlock
                   key={section.id}
@@ -119,8 +101,6 @@ export function PaperView({
               );
             })}
           </div>
-
-          {/* End of Paper */}
           <div className="text-center mt-6 sm:mt-8 pt-4 border-t border-gray-200">
             <p className="text-sm font-semibold text-red-600">
               End of Question Paper

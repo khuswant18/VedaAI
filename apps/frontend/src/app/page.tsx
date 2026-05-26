@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -27,15 +26,12 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import type { AssignmentListItem } from '@vedaai/shared';
-
 const statusConfig = {
   pending: { variant: 'warning' as const, icon: Clock, label: 'Pending' },
   processing: { variant: 'info' as const, icon: Loader2, label: 'Processing' },
   completed: { variant: 'success' as const, icon: CheckCircle2, label: 'Completed' },
   failed: { variant: 'danger' as const, icon: XCircle, label: 'Failed' },
 };
-
-// ── 3-Dot Dropdown Menu ─────────────────────────────────────────────────────
 function AssignmentMenu({
   assignment,
   onDelete,
@@ -46,8 +42,6 @@ function AssignmentMenu({
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
-  // Close on click outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -59,7 +53,6 @@ function AssignmentMenu({
     }
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
-
   return (
     <div className="relative" ref={menuRef}>
       <button
@@ -73,7 +66,6 @@ function AssignmentMenu({
       >
         <MoreVertical className="h-4 w-4 text-gray-500" />
       </button>
-
       {isOpen && (
         <div className="absolute right-0 top-full mt-1 w-44 bg-white rounded-xl border border-gray-200 shadow-lg z-40 py-1 animate-in slide-in-from-right">
           <button
@@ -107,8 +99,6 @@ function AssignmentMenu({
     </div>
   );
 }
-
-// ── Dashboard Page ──────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const [assignments, setAssignments] = useState<AssignmentListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -119,7 +109,6 @@ export default function DashboardPage() {
   const router = useRouter();
   const filterRef = useRef<HTMLDivElement>(null);
   const { activeNav, setActiveNav, setAssignmentCount } = useSidebarContext();
-
   useEffect(() => {
     async function loadAssignments() {
       try {
@@ -134,8 +123,6 @@ export default function DashboardPage() {
     }
     loadAssignments();
   }, [setAssignmentCount]);
-
-  // Close filter dropdown on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
@@ -145,7 +132,6 @@ export default function DashboardPage() {
     if (filterOpen) document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [filterOpen]);
-
   const handleDelete = async (id: string) => {
     try {
       await deleteAssignment(id);
@@ -159,7 +145,6 @@ export default function DashboardPage() {
       addToast('Failed to delete assignment', 'error');
     }
   };
-
   const filteredAssignments = assignments.filter((a) => {
     const matchesSearch =
       a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -167,7 +152,6 @@ export default function DashboardPage() {
     const matchesStatus = statusFilter === 'all' || a.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
-
   const filterOptions = [
     { value: 'all', label: 'All' },
     { value: 'pending', label: 'Pending' },
@@ -175,10 +159,6 @@ export default function DashboardPage() {
     { value: 'completed', label: 'Completed' },
     { value: 'failed', label: 'Failed' },
   ];
-
-
-
-  // Placeholder sections for non-assignment nav items
   const placeholderSections: Record<string, { title: string; description: string; icon: string }> = {
     Home: {
       title: 'Welcome to VedaAI',
@@ -201,8 +181,6 @@ export default function DashboardPage() {
       icon: '📚',
     },
   };
-
-  // If a non-Assignments section is selected, show a placeholder
   if (activeNav !== 'Assignments') {
     const section = placeholderSections[activeNav] || placeholderSections['Home'];
     return (
@@ -228,13 +206,10 @@ export default function DashboardPage() {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen">
       <Header title="Assignments" />
-
       <div className="px-3 sm:px-4 md:px-8 py-4 sm:py-6 max-w-7xl mx-auto">
-        {/* Page Header */}
         <div className="mb-4 sm:mb-6">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
@@ -246,10 +221,7 @@ export default function DashboardPage() {
             Manage and create assignments for your classes.
           </p>
         </div>
-
-        {/* Search & Filter Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
-          {/* Filter Dropdown */}
           <div className="relative" ref={filterRef}>
             <button
               onClick={() => setFilterOpen(!filterOpen)}
@@ -265,7 +237,6 @@ export default function DashboardPage() {
               </span>
               <ChevronDown className={`h-3.5 w-3.5 transition-transform ${filterOpen ? 'rotate-180' : ''}`} />
             </button>
-
             {filterOpen && (
               <div className="absolute left-0 top-full mt-1 w-44 bg-white rounded-xl border border-gray-200 shadow-lg z-40 py-1">
                 {filterOptions.map((option) => (
@@ -290,8 +261,6 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
-
-          {/* Search */}
           <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <input
@@ -303,8 +272,6 @@ export default function DashboardPage() {
             />
           </div>
         </div>
-
-        {/* Content */}
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Spinner size="lg" />
@@ -339,7 +306,6 @@ export default function DashboardPage() {
             {filteredAssignments.map((assignment) => {
               const status = statusConfig[assignment.status];
               const StatusIcon = status.icon;
-
               return (
                 <div
                   key={assignment._id}
@@ -360,7 +326,6 @@ export default function DashboardPage() {
                       onDelete={handleDelete}
                     />
                   </div>
-
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-3 sm:mt-4 gap-2 sm:gap-4">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-gray-500">
                       <span>Assigned: {formatDate(assignment.createdAt)}</span>
@@ -376,8 +341,6 @@ export default function DashboardPage() {
             })}
           </div>
         )}
-
-        {/* Floating Create Button */}
         <div className="fixed bottom-24 lg:bottom-8 right-4 sm:right-8 z-30">
           <Link href="/assignments/new">
             <button className="flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-lg text-orange-600 hover:bg-gray-50 transition-colors">

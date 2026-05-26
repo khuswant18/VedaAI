@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { useSidebarContext } from './AppShell';
@@ -10,24 +9,20 @@ import {
   BookOpen,
   Sparkles,
 } from 'lucide-react';
-
 const navItems = [
   { id: 'Home', href: '/', label: 'Home', icon: LayoutGrid },
   { id: 'Assignments', href: '/', label: 'Assignments', icon: Calendar, badge: true },
   { id: 'My Library', href: '/', label: 'Library', icon: BookOpen },
   { id: 'AI Toolkit', href: '/', label: 'AI Toolkit', icon: Sparkles },
 ];
-
 export function BottomNav() {
   const { activeNav, setActiveNav, assignmentCount } = useSidebarContext();
-
   return (
     <div className="fixed bottom-4 left-4 right-4 z-40 lg:hidden">
       <nav className="flex items-center justify-between px-6 py-4 bg-[#1C1C1C] rounded-[32px] shadow-2xl">
         {navItems.map((item) => {
           const isActive = activeNav === item.id;
           const Icon = item.icon;
-
           return (
             <button
               key={item.id}

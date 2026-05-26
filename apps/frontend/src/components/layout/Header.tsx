@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,20 +15,16 @@ import {
   Check,
 } from 'lucide-react';
 import { useSidebarContext } from './AppShell';
-
 interface HeaderProps {
   title?: string;
   showBack?: boolean;
   backHref?: string;
 }
-
-// ── Notification Dropdown ─────────────────────────────────────────────────
 function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const { notifications, markAllRead, markRead } =
     useNotificationStore();
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -39,9 +34,7 @@ function NotificationDropdown() {
     if (isOpen) document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
-
   const count = notifications.filter((n) => !n.read).length;
-
   return (
     <div className="relative" ref={ref}>
       <button
@@ -56,10 +49,8 @@ function NotificationDropdown() {
           </span>
         )}
       </button>
-
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-xl border border-gray-200 shadow-xl z-50 overflow-hidden">
-          {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
             <h3 className="text-sm font-semibold text-gray-900">Notifications</h3>
             {count > 0 && (
@@ -72,8 +63,6 @@ function NotificationDropdown() {
               </button>
             )}
           </div>
-
-          {/* List */}
           <div className="max-h-80 overflow-y-auto">
             {notifications.map((notif) => (
               <button
@@ -103,8 +92,6 @@ function NotificationDropdown() {
               </button>
             ))}
           </div>
-
-          {/* Footer */}
           <div className="px-4 py-2.5 border-t border-gray-100 bg-gray-50">
             <button
               onClick={() => setIsOpen(false)}
@@ -118,12 +105,9 @@ function NotificationDropdown() {
     </div>
   );
 }
-
-// ── Profile Dropdown ──────────────────────────────────────────────────────
 function ProfileDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -133,7 +117,6 @@ function ProfileDropdown() {
     if (isOpen) document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
-
   return (
     <div className="relative" ref={ref}>
       <button
@@ -160,15 +143,12 @@ function ProfileDropdown() {
           }`}
         />
       </button>
-
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl border border-gray-200 shadow-xl z-50 py-1 overflow-hidden">
-          {/* Profile header */}
           <div className="px-4 py-3 border-b border-gray-100">
             <p className="text-sm font-semibold text-gray-900">John Doe</p>
             <p className="text-xs text-gray-500">john.doe@school.edu</p>
           </div>
-
           <button
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -196,8 +176,6 @@ function ProfileDropdown() {
     </div>
   );
 }
-
-// ── Main Header ───────────────────────────────────────────────────────────
 export function Header({
   title,
   showBack = false,
@@ -205,14 +183,11 @@ export function Header({
 }: HeaderProps) {
   const { open } = useSidebarContext();
   const pathname = usePathname();
-
-  // Derive breadcrumb from pathname
   const getBreadcrumb = () => {
     if (pathname.startsWith('/assignments/new')) return 'Assignment';
     if (pathname.startsWith('/papers')) return 'Question Paper';
     return title || 'Assignment';
   };
-
   return (
     <div className="px-4 pt-4 sticky top-0 z-30">
       <header className="flex items-center justify-between h-16 px-4 bg-white rounded-[24px] shadow-sm">
@@ -225,8 +200,6 @@ export function Header({
               <ArrowLeft className="h-5 w-5 text-gray-600" />
             </Link>
           )}
-
-          {/* Mobile logo (shown when no back button) */}
           {!showBack && (
             <div className="flex items-center gap-2 lg:hidden">
               <img 
@@ -237,19 +210,14 @@ export function Header({
               <span className="text-lg font-bold text-gray-900">VedaAI</span>
             </div>
           )}
-
-          {/* Breadcrumb with icon — matches Figma */}
           <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
             <LayoutGrid className="h-4 w-4" />
             <span className="font-medium">{getBreadcrumb()}</span>
           </div>
         </div>
-
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <NotificationDropdown />
           <ProfileDropdown />
-          
-          {/* Mobile hamburger — moved to the right */}
           {!showBack && (
             <button
               onClick={open}
