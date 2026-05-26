@@ -4,7 +4,7 @@ interface EnvConfig {
   mongodbUri: string;
   redisUrl: string;
   groqApiKey: string;
-  corsOrigin: string;
+  corsOrigin: string | string[];
 }
 
 function getEnvVar(key: string, fallback?: string): string {
@@ -22,7 +22,7 @@ export const env: EnvConfig = {
   mongodbUri: getEnvVar('MONGODB_URI', 'mongodb://localhost:27017/vedaai'),
   redisUrl: getEnvVar('REDIS_URL', 'redis://localhost:6379'),
   groqApiKey: getEnvVar('GROQ_API_KEY', ''),
-  corsOrigin: getEnvVar('CORS_ORIGIN', 'http://localhost:3000'),
+  corsOrigin: getEnvVar('CORS_ORIGIN', 'http://localhost:3000,https://veda-ai-frontend-one.vercel.app,https://vedaai-frontend.vercel.app').split(',').map(o => o.trim()),
 };
 
 export const isDev = env.nodeEnv === 'development';
