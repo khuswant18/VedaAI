@@ -202,11 +202,14 @@ export function Header({
           )}
           {!showBack && (
             <div className="flex items-center gap-2 lg:hidden">
-              <img 
-                src="/main_logo.jpg" 
-                alt="VedaAI Logo" 
-                className="w-8 h-8 rounded-lg object-cover" 
-              />
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden">
+                <img 
+                  src="/main_logo.jpg" 
+                  alt="VedaAI Logo Background" 
+                  className="absolute inset-0 w-full h-full object-cover" 
+                />
+                <span className="relative text-white font-bold text-sm z-10">V</span>
+              </div>
               <span className="text-lg font-bold text-gray-900">VedaAI</span>
             </div>
           )}
