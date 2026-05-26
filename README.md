@@ -10,18 +10,18 @@ AI-powered question paper generator for teachers. Create assignments and instant
 ┌──────────────────────────────────────────────────────────────┐
 │                    System Architecture                       │
 │                                                              │
-│  ┌────────────┐   ┌────────────┐   ┌───────┐  ┌──────────┐  │
-│  │  Frontend   │──▶│  Backend   │──▶│ Redis │  │ MongoDB  │  │
-│  │  Next.js    │   │  Express   │   │ Queue │  │ Storage  │  │
-│  │  :3000      │   │  :5000     │   │ :6379 │  │ :27017   │  │
-│  └────────────┘   └────────────┘   └───────┘  └──────────┘  │
+│  ┌────────────┐   ┌────────────┐   ┌──────────┐  ┌──────────┐ │
+│  │  Frontend  │──▶│  Backend   │──▶│ Upstash  │  │ MongoDB  │ │
+│  │  Next.js   │   │  Express   │   │ Redis    │  │ Atlas    │ │
+│  │  :3000     │   │  :5000     │   │ (Queue)  │  │ (Storage)│ │
+│  └────────────┘   └────────────┘   └──────────┘  └──────────┘ │
 │                        │                                      │
-│                 ┌──────┴──────┐                                │
-│                 │  BullMQ     │                                │
-│                 │  Worker     │                                │
-│                 │  ↓          │                                │
-│                 │  Claude AI  │                                │
-│                 └─────────────┘                                │
+│                 ┌──────┴──────┐                               │
+│                 │  BullMQ     │                               │
+│                 │  Worker     │                               │
+│                 │  ↓          │                               │
+│                 │  Groq AI    │                               │
+│                 └─────────────┘                               │
 └──────────────────────────────────────────────────────────────┘
 
 Flow: Form → REST API → BullMQ Job → AI Generation → WebSocket → Paper View
@@ -42,11 +42,11 @@ Flow: Form → REST API → BullMQ Job → AI Generation → WebSocket → Paper
 | HTTP       | axios                                 | API client                       |
 | Realtime   | socket.io-client                      | WebSocket client                 |
 | Backend    | Node.js + Express + TypeScript        | REST API server                  |
-| Database   | MongoDB + Mongoose                    | Data persistence                 |
-| Cache      | Redis + ioredis                       | Caching, job status              |
+| Database   | MongoDB Atlas + Mongoose              | Data persistence                 |
+| Cache      | Upstash Redis + ioredis               | Caching, job status              |
 | Queue      | BullMQ                                | Async job processing             |
 | WebSocket  | socket.io                             | Real-time events                 |
-| AI         | Anthropic Claude SDK                  | Question paper generation        |
+| AI         | Groq SDK                              | Question paper generation        |
 | Shared     | Zod                                   | Schema validation, type sharing  |
 
 ---
@@ -54,25 +54,15 @@ Flow: Form → REST API → BullMQ Job → AI Generation → WebSocket → Paper
 ## Prerequisites
 
 - **Node.js** ≥ 18
-- **MongoDB** (running on port 27017)
-- **Redis** (running on port 6379)
-- **Anthropic API Key** (for AI generation)
+- **MongoDB Atlas** URI (or remote MongoDB instance)
+- **Upstash Redis** URL (or remote Redis instance)
+- **Groq API Key** (for AI generation)
 
 ---
 
 ## Local Setup
 
-### 1. Start infrastructure
-
-```bash
-# Start MongoDB (port 27017)
-mongod --dbpath /path/to/data
-
-# Start Redis (port 6379)
-redis-server
-```
-
-### 2. Install dependencies
+### 1. Install dependencies
 
 ```bash
 # From project root
@@ -82,15 +72,15 @@ npm install
 npm run build:shared
 ```
 
-### 3. Configure environment
+### 2. Configure environment
 
 ```bash
 cp apps/backend/.env.example apps/backend/.env
 cp apps/frontend/.env.example apps/frontend/.env
-# Edit .env files with your values
+# Edit .env files with your values (MongoDB URI, Upstash URL, Groq API Key)
 ```
 
-### 4. Run development servers
+### 3. Run development servers
 
 ```bash
 # Terminal 1: Backend
@@ -110,9 +100,9 @@ npm run dev:frontend
 |--------------------|---------------------------------|----------------------------------------|
 | `PORT`             | Backend server port             | `5000`                                 |
 | `NODE_ENV`         | Environment mode                | `development`                          |
-| `MONGODB_URI`      | MongoDB connection string       | `mongodb://localhost:27017/vedaai`      |
-| `REDIS_URL`        | Redis connection string         | `redis://localhost:6379`               |
-| `ANTHROPIC_API_KEY`| Anthropic Claude API key        | `sk-ant-...`                           |
+| `MONGODB_URI`      | MongoDB Atlas connection string | `mongodb+srv://user:pass@cluster...`   |
+| `REDIS_URL`        | Upstash Redis connection string | `rediss://default:pass@...upstash.io`  |
+| `GROQ_API_KEY`     | Groq API key                    | `gsk_...`                              |
 | `CORS_ORIGIN`      | Allowed CORS origin             | `http://localhost:3000`                |
 
 ### Frontend (apps/frontend/.env)
