@@ -30,26 +30,22 @@ export default function PaperPage() {
 
   const jobStatus = useJobStatus(currentJobId);
 
-  // Fetch assignment info
   useEffect(() => {
     async function loadAssignment() {
       try {
         const assignment = await getAssignment(assignmentId);
         setAssignmentDueDate(assignment.dueDate);
       } catch {
-        // Non-critical
       }
     }
     loadAssignment();
   }, [assignmentId]);
 
-  // Fetch paper
   useEffect(() => {
     fetchPaper(assignmentId);
     return () => clearPaper();
   }, [assignmentId, fetchPaper, clearPaper]);
 
-  // Socket for regeneration
   const handleCompleted = useCallback(() => {
     setCurrentJobId(null);
     setIsRegenerating(false);
@@ -65,7 +61,6 @@ export default function PaperPage() {
     },
   });
 
-  // Check polling fallback for regeneration
   useEffect(() => {
     if (jobStatus?.status === 'completed' && currentJobId) {
       handleCompleted();
@@ -86,7 +81,6 @@ export default function PaperPage() {
     if (!paper) return;
 
     try {
-      // Dynamic import to avoid SSR issues
       const { generatePaperPDF } = await import('@/lib/pdfExport');
       await generatePaperPDF(paper as GeneratedPaper);
       addToast('PDF downloaded successfully!', 'success');
@@ -133,7 +127,7 @@ export default function PaperPage() {
         ) : null}
       </div>
 
-      {/* Regeneration Progress */}
+      {}
       {isRegenerating && currentJobId && (
         <JobProgress
           step={jobStatus?.step}

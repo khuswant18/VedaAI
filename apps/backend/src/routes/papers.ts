@@ -3,7 +3,6 @@ import { paperService } from '../services/paperService';
 
 const router = Router();
 
-// GET /api/papers/:assignmentId
 router.get('/:assignmentId', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { assignmentId } = req.params;

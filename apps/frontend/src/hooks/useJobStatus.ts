@@ -13,7 +13,6 @@ export function useJobStatus(jobId: string | null) {
   useEffect(() => {
     if (!jobId) return;
 
-    // Only poll if socket is disconnected
     if (isConnected) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -27,7 +26,6 @@ export function useJobStatus(jobId: string | null) {
       if (status) {
         setPolledStatus(status);
 
-        // Stop polling when terminal state
         if (status.status === 'completed' || status.status === 'failed') {
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -48,6 +46,5 @@ export function useJobStatus(jobId: string | null) {
     };
   }, [jobId, isConnected]);
 
-  // Prefer socket status, fall back to polled
   return socketJobStatus ?? polledStatus;
 }

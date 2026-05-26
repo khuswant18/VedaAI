@@ -70,7 +70,6 @@ export function useSocket(jobId: string | null, events?: SocketJobEvents) {
     connect();
 
     return () => {
-      // Don't disconnect on unmount — socket is shared
     };
   }, [jobId, connect]);
 

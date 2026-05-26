@@ -27,12 +27,10 @@ export function FileUpload({ onFileSelect, error }: FileUploadProps) {
     async (file: File) => {
       setSelectedFile(file);
 
-      // Extract text from .txt files client-side
       if (file.type === 'text/plain') {
         const text = await file.text();
         onFileSelect(file, text);
       } else {
-        // PDF will be processed server-side
         onFileSelect(file);
       }
     },

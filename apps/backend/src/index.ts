@@ -15,7 +15,6 @@ import jobRoutes from './routes/jobs';
 import { logger } from './utils/logger';
 import fs from 'fs';
 
-// Ensure uploads directory exists
 if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads', { recursive: true });
 }
@@ -23,7 +22,6 @@ if (!fs.existsSync('uploads')) {
 const app = express();
 const httpServer = createServer(app);
 
-// ── Middleware ───────────────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
 const allowedOrigins = [
   'http://localhost:3000',
@@ -36,7 +34,6 @@ if (Array.isArray(env.corsOrigin)) {
   allowedOrigins.push(env.corsOrigin);
 }
 
-// Remove duplicates
 const uniqueOrigins = [...new Set(allowedOrigins)];
 
 app.use(cors({ origin: uniqueOrigins, credentials: true }));
@@ -47,7 +44,6 @@ if (isDev) {
   app.use(morgan('dev'));
 }
 
-// ── Health check ────────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => {
   res.status(200).send('OK');
 });
@@ -56,27 +52,20 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// ── Routes ──────────────────────────────────────────────────────────────────
 app.use('/api/assignments', assignmentRoutes);
 app.use('/api/papers', paperRoutes);
 app.use('/api/jobs', jobRoutes);
 
-// ── Error handler ───────────────────────────────────────────────────────────
 app.use(errorHandler);
 
-// ── Start server ────────────────────────────────────────────────────────────
 async function start(): Promise<void> {
   try {
-    // Connect to MongoDB
     await connectDB();
 
-    // Setup Socket.io
     setupSocket(httpServer);
 
-    // Start BullMQ worker
     startWorker();
 
-    // Start HTTP server
     httpServer.listen(env.port, () => {
       logger.info(`🚀 Server running on port ${env.port}`);
       logger.info(`📋 API: http://localhost:${env.port}/api`);
@@ -90,7 +79,6 @@ async function start(): Promise<void> {
 
 start();
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received, shutting down...');
   httpServer.close(() => {

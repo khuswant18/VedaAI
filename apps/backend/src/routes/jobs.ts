@@ -4,12 +4,10 @@ import { Job } from '../models/Job';
 
 const router = Router();
 
-// GET /api/jobs/:jobId
 router.get('/:jobId', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { jobId } = req.params;
 
-    // Check Redis cache first
     const cached = await cacheService.getJobStatus(jobId);
     if (cached) {
       res.json({
@@ -19,7 +17,6 @@ router.get('/:jobId', async (req: Request, res: Response, next: NextFunction) =>
       return;
     }
 
-    // Fall back to MongoDB
     const job = await Job.findOne({ bullJobId: jobId }).lean();
     if (!job) {
       res.status(404).json({

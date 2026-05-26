@@ -1,8 +1,8 @@
 import { redis } from '../config/redis';
 import { logger } from '../utils/logger';
 
-const DEFAULT_TTL = 3600; // 1 hour
-const PAPER_TTL = 86400;  // 24 hours
+const DEFAULT_TTL = 3600;
+const PAPER_TTL = 86400; 
 
 export const cacheService = {
   async get(key: string): Promise<string | null> {
@@ -30,7 +30,6 @@ export const cacheService = {
     }
   },
 
-  // Job-specific helpers
   async setJobStatus(jobId: string, status: Record<string, unknown>): Promise<void> {
     await this.set(`job:${jobId}:status`, JSON.stringify(status), DEFAULT_TTL);
   },
@@ -45,7 +44,6 @@ export const cacheService = {
     }
   },
 
-  // Paper-specific helpers
   async setPaper(assignmentId: string, paper: Record<string, unknown>): Promise<void> {
     await this.set(`paper:${assignmentId}`, JSON.stringify(paper), PAPER_TTL);
   },

@@ -14,17 +14,14 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
   const { assignmentId, jobId } = job.data;
 
   try {
-    // Step 1: Fetch assignment
     const assignment = await Assignment.findById(assignmentId);
     if (!assignment) {
       throw new Error(`Assignment not found: ${assignmentId}`);
     }
 
-    // Update assignment status
     assignment.status = 'processing';
     await assignment.save();
 
-    // Step 2: Emit generating status
     emitToJob(jobId, 'job:started', { jobId, assignmentId });
     emitToJob(jobId, 'job:progress', { jobId, step: 'generating' });
     await cacheService.setJobStatus(jobId, {
@@ -38,7 +35,6 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
       { status: 'processing', step: 'generating' }
     );
 
-    // Step 3: Call AI service
     const assignmentData: AssignmentInput = {
       title: assignment.title,
       subject: assignment.subject,
@@ -52,7 +48,6 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
 
     const rawResponse = await generatePaper(assignmentData);
 
-    // Step 4: Parse response
     emitToJob(jobId, 'job:progress', { jobId, step: 'parsing' });
     await cacheService.setJobStatus(jobId, {
       jobId,
@@ -67,7 +62,6 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
 
     const parsedPaper = await parsePaper(rawResponse);
 
-    // Step 5: Save paper
     emitToJob(jobId, 'job:progress', { jobId, step: 'saving' });
     await cacheService.setJobStatus(jobId, {
       jobId,
@@ -89,7 +83,6 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
 
     const paperId = savedPaper._id.toString();
 
-    // Step 6: Mark complete
     await Job.findOneAndUpdate(
       { bullJobId: jobId },
       { status: 'completed', step: 'done', paperId: savedPaper._id }
@@ -113,7 +106,6 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     logger.error(`Job failed: ${jobId}`, errorMessage);
 
-    // Mark failed
     await Job.findOneAndUpdate(
       { bullJobId: jobId },
       { status: 'failed', error: errorMessage }
@@ -128,7 +120,7 @@ async function processGenerationJob(job: BullJob<GenerationJobData>): Promise<vo
 
     emitToJob(jobId, 'job:failed', { jobId, error: errorMessage });
 
-    throw error; // Let BullMQ handle retry
+    throw error;
   }
 }
 

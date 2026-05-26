@@ -5,12 +5,10 @@ import { buildSystemPrompt, buildUserPrompt, buildCorrectionPrompt } from '../ut
 import { logger } from '../utils/logger';
 import type { AssignmentInput } from '@vedaai/shared';
 
-// ── Groq client ─────────────────────────────────────────────────────────────
 const groq = new Groq({
   apiKey: env.groqApiKey,
 });
 
-// ── Response validation schema (sections only — paper wrapper added later) ──
 const AISectionSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -35,15 +33,12 @@ const AIResponseSchema = z.object({
 
 type AIResponse = z.infer<typeof AIResponseSchema>;
 
-// ── Extract JSON from potentially polluted LLM response ─────────────────────
 function extractJSON(text: string): string {
-  // Remove markdown code blocks if present
   const cleaned = text
     .replace(/```json\s*/gi, '')
     .replace(/```\s*/g, '')
     .trim();
 
-  // Try to find JSON object boundaries
   const start = cleaned.indexOf('{');
   const end = cleaned.lastIndexOf('}');
 
@@ -54,7 +49,6 @@ function extractJSON(text: string): string {
   return cleaned.slice(start, end + 1);
 }
 
-// ── Generate paper using Groq ───────────────────────────────────────────────
 export async function generatePaper(assignment: AssignmentInput): Promise<string> {
   const systemPrompt = buildSystemPrompt();
   const userPrompt = buildUserPrompt(assignment);
@@ -79,7 +73,6 @@ export async function generatePaper(assignment: AssignmentInput): Promise<string
   return content;
 }
 
-// ── Parse and validate AI response ──────────────────────────────────────────
 export async function parsePaper(rawResponse: string): Promise<AIResponse> {
   const jsonString = extractJSON(rawResponse);
   const parsed = JSON.parse(jsonString);
@@ -89,7 +82,6 @@ export async function parsePaper(rawResponse: string): Promise<AIResponse> {
     return result.data;
   }
 
-  // ── Retry with correction prompt ────────────────────────────────────────
   logger.warn('AI response validation failed, retrying with correction...');
   const errorMessages = result.error.errors
     .map((e) => `${e.path.join('.')}: ${e.message}`)

@@ -11,7 +11,6 @@ import { FileUpload } from './FileUpload';
 import { useAssignmentStore } from '@/store/assignmentStore';
 import type { QuestionType } from '@vedaai/shared';
 
-// Form validation schema
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   subject: z.string().min(1, 'Subject is required'),
@@ -58,20 +57,17 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
   );
 
   const onSubmit = async (data: FormFields) => {
-    // Validate question types
     if (questionTypes.length === 0) {
       setQuestionTypeError('Select at least one question type');
       return;
     }
     setQuestionTypeError('');
 
-    // Validate due date is in the future
     const dueDate = new Date(data.dueDate);
     if (dueDate <= new Date()) {
       return;
     }
 
-    // Build questionsPerType and marksPerType
     const questionsPerType: Record<string, number> = {};
     const marksPerType: Record<string, number> = {};
     const types: QuestionType[] = [];
@@ -98,18 +94,16 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
       );
       onSubmitSuccess();
     } catch {
-      // Error handled in store
     }
   };
 
-  // Get tomorrow's date for min
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().split('T')[0];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-8">
-      {/* Assignment Details Section */}
+      {}
       <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-sm">
         <div>
           <h3 className="text-lg font-semibold text-gray-900">
@@ -120,10 +114,10 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
           </p>
         </div>
 
-        {/* File Upload */}
+        {}
         <FileUpload onFileSelect={handleFileSelect} />
 
-        {/* Title & Subject */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Input
             label="Title"
@@ -139,7 +133,7 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
           />
         </div>
 
-        {/* Due Date */}
+        {}
         <Input
           label="Due Date"
           type="date"
@@ -149,7 +143,7 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
         />
       </div>
 
-      {/* Question Configuration Section */}
+      {}
       <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 shadow-sm">
         <QuestionTypeSelector
           selected={questionTypes}
@@ -158,7 +152,7 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
         />
       </div>
 
-      {/* Additional Instructions */}
+      {}
       <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 shadow-sm space-y-3">
         <label className="block text-sm font-semibold text-gray-900">
           Additional Information (For better output)
@@ -171,7 +165,7 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
         />
       </div>
 
-      {/* Submit */}
+      {}
       <div className="flex justify-end">
         <Button
           type="submit"

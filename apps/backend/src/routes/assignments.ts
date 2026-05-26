@@ -13,16 +13,13 @@ import path from 'path';
 
 const router = Router();
 
-// POST /api/assignments — Create assignment + queue generation job
 router.post(
   '/',
   upload.single('file'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Parse the body data
       let bodyData = req.body;
 
-      // If form data, parse JSON fields
       if (typeof bodyData.questionTypes === 'string') {
         bodyData = {
           ...bodyData,
@@ -32,20 +29,17 @@ router.post(
         };
       }
 
-      // Handle file upload — extract text
       let fileContent: string | undefined;
       if (req.file) {
         const filePath = req.file.path;
         if (req.file.mimetype === 'text/plain') {
           fileContent = fs.readFileSync(filePath, 'utf-8');
         } else if (req.file.mimetype === 'application/pdf') {
-          // Dynamic import for pdf-parse (CommonJS module)
           const pdfParse = (await import('pdf-parse')).default;
           const pdfBuffer = fs.readFileSync(filePath);
           const pdfData = await pdfParse(pdfBuffer);
           fileContent = pdfData.text;
         }
-        // Clean up uploaded file
         fs.unlinkSync(filePath);
       }
 
@@ -54,10 +48,8 @@ router.post(
         fileContent: fileContent ?? bodyData.fileContent,
       };
 
-      // Validate with Zod
       const validated = AssignmentSchema.parse(inputData);
 
-      // Save to MongoDB
       const assignment = new Assignment({
         title: validated.title,
         subject: validated.subject,
@@ -74,10 +66,8 @@ router.post(
       const assignmentId = assignment._id.toString();
       const jobId = uuidv4();
 
-      // Add to BullMQ queue
       await generationQueue.add('generate', { assignmentId, jobId });
 
-      // Save Job document
       const jobDoc = new Job({
         assignmentId: assignment._id,
         bullJobId: jobId,
@@ -86,7 +76,6 @@ router.post(
       });
       await jobDoc.save();
 
-      // Cache initial job status
       await cacheService.setJobStatus(jobId, {
         jobId,
         assignmentId,
@@ -106,7 +95,6 @@ router.post(
   }
 );
 
-// GET /api/assignments — List all assignments
 router.get('/', async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const assignments = await Assignment.find()
@@ -126,7 +114,6 @@ router.get('/', async (_req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-// GET /api/assignments/:id
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const assignment = await Assignment.findById(req.params.id).lean();
@@ -148,7 +135,6 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-// POST /api/assignments/:id/regenerate
 router.post('/:id/regenerate', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const assignmentId = req.params.id;
@@ -162,14 +148,11 @@ router.post('/:id/regenerate', async (req: Request, res: Response, next: NextFun
       return;
     }
 
-    // Delete cached paper
     await paperService.deletePaperByAssignmentId(assignmentId);
 
-    // Reset assignment status
     assignment.status = 'pending';
     await assignment.save();
 
-    // Create new job
     const jobId = uuidv4();
     await generationQueue.add('generate', { assignmentId, jobId });
 
@@ -199,7 +182,6 @@ router.post('/:id/regenerate', async (req: Request, res: Response, next: NextFun
   }
 });
 
-// DELETE /api/assignments/:id
 router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const assignment = await Assignment.findByIdAndDelete(req.params.id);
@@ -212,7 +194,6 @@ router.delete('/:id', async (req: Request, res: Response, next: NextFunction) =>
       return;
     }
 
-    // Clean up related data
     await paperService.deletePaperByAssignmentId(req.params.id);
     await Job.deleteMany({ assignmentId: req.params.id });
 

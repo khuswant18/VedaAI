@@ -38,7 +38,6 @@ export function AppShell({ children }: AppShellProps) {
   const [assignmentCount, setAssignmentCount] = useState(0);
   const pathname = usePathname();
 
-  // Auto-set activeNav based on URL changes (e.g. navigating to /assignments/new)
   useEffect(() => {
     if (pathname.startsWith('/assignments') || pathname.startsWith('/papers')) {
       setActiveNav('Assignments');

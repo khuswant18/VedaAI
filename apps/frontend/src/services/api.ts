@@ -17,7 +17,6 @@ const api = axios.create({
   timeout: 30000,
 });
 
-// ── Assignment APIs ─────────────────────────────────────────────────────────
 export async function createAssignment(
   data: FormData
 ): Promise<CreateAssignmentResponse> {
@@ -80,7 +79,6 @@ export async function deleteAssignment(id: string): Promise<void> {
   }
 }
 
-// ── Paper APIs ──────────────────────────────────────────────────────────────
 export async function getPaper(
   assignmentId: string
 ): Promise<GeneratedPaper | null> {
@@ -99,7 +97,6 @@ export async function getPaper(
   }
 }
 
-// ── Job APIs ────────────────────────────────────────────────────────────────
 export async function getJobStatus(jobId: string): Promise<JobStatus | null> {
   try {
     const response = await api.get<ApiResponse<JobStatus>>(`/jobs/${jobId}`);

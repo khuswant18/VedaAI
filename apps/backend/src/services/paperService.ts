@@ -50,7 +50,6 @@ export const paperService = {
     await paper.save();
     logger.info(`Paper saved: ${paper._id}`);
 
-    // Cache the paper
     const paperObj = paper.toObject();
     const cacheData = {
       ...paperObj,
@@ -64,14 +63,12 @@ export const paperService = {
   },
 
   async getPaperByAssignmentId(assignmentId: string): Promise<Record<string, unknown> | null> {
-    // Check cache first
     const cached = await cacheService.getPaper(assignmentId);
     if (cached) {
       logger.debug('Paper cache hit for:', assignmentId);
       return cached;
     }
 
-    // Fall back to MongoDB
     const paper = await GeneratedPaper.findOne({ assignmentId }).lean();
     if (!paper) return null;
 
@@ -82,7 +79,6 @@ export const paperService = {
       generatedAt: paper.generatedAt.toISOString(),
     };
 
-    // Cache for next time
     await cacheService.setPaper(assignmentId, paperData);
     logger.debug('Paper cached for:', assignmentId);
 

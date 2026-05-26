@@ -9,7 +9,6 @@ import {
 } from '@react-pdf/renderer';
 import type { GeneratedPaper, Section, Question } from '@vedaai/shared';
 
-// ── Styles ──────────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   page: {
     padding: 40,
@@ -154,23 +153,21 @@ const styles = StyleSheet.create({
   },
 });
 
-// ── Section letters ─────────────────────────────────────────────────────────
 const sectionLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-// ── PDF Document Component ──────────────────────────────────────────────────
 function PaperPDF({ paper }: { paper: GeneratedPaper }) {
   let questionCounter = 0;
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
+        {}
         <View style={styles.header}>
           <Text style={styles.title}>{paper.title}</Text>
           <Text style={styles.subtitle}>Subject: {paper.subject}</Text>
         </View>
 
-        {/* Meta */}
+        {}
         <View style={styles.metaRow}>
           <Text style={styles.metaText}>
             Time Allowed: 45 minutes
@@ -180,12 +177,12 @@ function PaperPDF({ paper }: { paper: GeneratedPaper }) {
           </Text>
         </View>
 
-        {/* Instruction */}
+        {}
         <Text style={styles.instruction}>
           All questions are compulsory unless stated otherwise.
         </Text>
 
-        {/* Student Info */}
+        {}
         <View style={styles.studentInfo}>
           <View style={styles.studentField}>
             <Text style={styles.fieldLabel}>Name:</Text>
@@ -201,7 +198,7 @@ function PaperPDF({ paper }: { paper: GeneratedPaper }) {
           </View>
         </View>
 
-        {/* Sections */}
+        {}
         {paper.sections.map((section: Section, sIdx: number) => {
           const letter = sectionLetters[sIdx] || String(sIdx + 1);
 
@@ -243,10 +240,10 @@ function PaperPDF({ paper }: { paper: GeneratedPaper }) {
           );
         })}
 
-        {/* End */}
+        {}
         <Text style={styles.endOfPaper}>End of Question Paper</Text>
 
-        {/* Footer */}
+        {}
         <Text
           style={styles.footer}
           render={({ pageNumber, totalPages }) =>
@@ -259,11 +256,9 @@ function PaperPDF({ paper }: { paper: GeneratedPaper }) {
   );
 }
 
-// ── Export function ──────────────────────────────────────────────────────────
 export async function generatePaperPDF(paper: GeneratedPaper): Promise<void> {
   const blob = await pdf(<PaperPDF paper={paper} />).toBlob();
 
-  // Download using anchor trick
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;

@@ -42,7 +42,6 @@ export default function NewAssignmentPage() {
     setShowProgress(false);
   };
 
-  // Check if job completed via polling
   React.useEffect(() => {
     if (
       jobStatus?.status === 'completed' &&
@@ -59,7 +58,7 @@ export default function NewAssignmentPage() {
       <Header title="Assignment" showBack backHref="/" />
 
       <div className="px-3 sm:px-4 md:px-8 py-4 sm:py-6 max-w-3xl mx-auto">
-        {/* Page Title */}
+        {}
         <div className="mb-5 sm:mb-8">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
@@ -72,11 +71,11 @@ export default function NewAssignmentPage() {
           </p>
         </div>
 
-        {/* Form */}
+        {}
         <AssignmentForm onSubmitSuccess={handleSubmitSuccess} />
       </div>
 
-      {/* Job Progress Overlay */}
+      {}
       {showProgress && currentJobId && (
         <JobProgress
           step={jobStatus?.step}
