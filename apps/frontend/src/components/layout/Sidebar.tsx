@@ -56,20 +56,17 @@ function SidebarContent({
       <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
         <Link
           href="/"
-          className="flex items-center gap-2.5"
+          className="flex items-center gap-3"
           onClick={() => {
             setActiveNav('Assignments');
             onClose?.();
           }}
         >
-          <div className="relative flex items-center justify-center w-9 h-9 rounded-xl overflow-hidden shadow-sm">
-            <img 
-              src="/assets/logo.png" 
-              alt="VedaAI Logo" 
-              className="absolute inset-0 w-full h-full object-cover" 
-            />
-            <span className="relative text-white font-bold text-lg z-10">V</span>
-          </div>
+          <img 
+            src="/assets/logo.svg" 
+            alt="VedaAI Logo" 
+            className="w-9 h-9 flex-shrink-0" 
+          />
           <span className="text-xl font-bold text-gray-900 tracking-tight">
             VedaAI
           </span>
@@ -83,7 +80,7 @@ function SidebarContent({
           </button>
         )}
       </div>
-      <div className="px-4 py-4">
+      <div className="px-6 py-4">
         <Link
           href="/assignments/new"
           onClick={onClose}
@@ -114,12 +111,14 @@ function SidebarContent({
               {isActive && (
                 <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#ff5623] rounded-r-full" />
               )}
-              <Icon
-                className={cn(
-                  'h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-[#171717]' : 'text-[#5d5d5d]'
-                )}
-              />
+              <div className="w-9 flex items-center justify-center flex-shrink-0">
+                <Icon
+                  className={cn(
+                    'h-5 w-5',
+                    isActive ? 'text-[#171717]' : 'text-[#5d5d5d]'
+                  )}
+                />
+              </div>
               <span className="flex-1">{item.label}</span>
               {item.badge && assignmentCount > 0 && (
                 <span className="flex items-center justify-center min-w-[22px] h-[22px] rounded-full bg-[#ff5623] text-white text-[10px] font-bold px-1.5">
@@ -140,7 +139,9 @@ function SidebarContent({
               : 'text-[#5d5d5d] hover:bg-[#f6f6f6] hover:text-[#171717]'
           )}
         >
-          <SettingsIcon className="h-5 w-5" />
+          <div className="w-9 flex items-center justify-center flex-shrink-0">
+            <SettingsIcon className="h-5 w-5" />
+          </div>
           Settings
         </button>
         {settingsOpen && (
