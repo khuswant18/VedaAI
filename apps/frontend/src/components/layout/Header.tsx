@@ -210,7 +210,7 @@ export function Header({
           {!showBack && (
             <div className="flex items-center gap-2 lg:hidden">
               <img 
-                src="/assets/logo.svg" 
+                src="/assets/logo.png" 
                 alt="VedaAI Logo" 
                 className="w-8 h-8 flex-shrink-0" 
               />

@@ -63,7 +63,7 @@ function SidebarContent({
           }}
         >
           <img 
-            src="/assets/logo.svg" 
+            src="/assets/logo.png" 
             alt="VedaAI Logo" 
             className="w-9 h-9 flex-shrink-0" 
           />
