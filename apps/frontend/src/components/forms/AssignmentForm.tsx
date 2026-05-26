@@ -173,7 +173,7 @@ export function AssignmentForm({ onSubmitSuccess }: AssignmentFormProps) {
           isLoading={isSubmitting}
           className="w-full sm:w-auto sm:min-w-[200px]"
         >
-          Generate Question Paper
+          {isSubmitting ? 'Starting Render / Generating...' : 'Generate Question Paper'}
         </Button>
       </div>
     </form>

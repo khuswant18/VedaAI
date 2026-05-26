@@ -98,7 +98,9 @@ export default function PaperPage() {
         {isLoading && !paper ? (
           <div className="flex flex-col items-center justify-center py-20">
             <Spinner size="lg" />
-            <p className="text-sm text-gray-500 mt-4">Loading paper...</p>
+            <p className="text-sm text-gray-500 mt-4 text-center px-4 animate-pulse">
+              Render backend is starting up, this might take up to a minute...
+            </p>
           </div>
         ) : error && !paper ? (
           <div className="text-center py-20">

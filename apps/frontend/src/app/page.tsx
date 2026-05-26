@@ -273,8 +273,11 @@ export default function DashboardPage() {
           </div>
         </div>
         {isLoading ? (
-          <div className="flex items-center justify-center py-20">
+          <div className="flex flex-col items-center justify-center py-20 space-y-4">
             <Spinner size="lg" />
+            <p className="text-sm text-gray-500 animate-pulse text-center max-w-sm px-4">
+              Render backend is starting up, this might take up to a minute...
+            </p>
           </div>
         ) : filteredAssignments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 sm:py-20 max-w-md mx-auto text-center px-4">
